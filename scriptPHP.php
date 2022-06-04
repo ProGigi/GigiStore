@@ -1,10 +1,10 @@
 <?php
-$username="m1188_gigi";
-$password="Django0812";
-$localhost="mysql29.mydevil.net";
-$database= "m1188_gigistor";
+$username = "m1188_gigi";
+$password = "Django0812";
+$localhost = "mysql29.mydevil.net";
+$database = "m1188_gigistor";
 
-$connect = @new mysqli($localhost,$username, $password, $database);
+$connect = @new mysqli($localhost, $username, $password, $database);
 $connect->set_charset("utf8");
 
 
@@ -19,103 +19,98 @@ $actInne = '';
 $actregister = '';
 $actLogin = '';
 $actDodaj = '';
+$dAdmin = " d-none";
 
 $self = $_SERVER['PHP_SELF'];
-if($self == "/index.php"){
+if ($self == "/index.php") {
   $actIndex = "actBtn";
-}elseif($self == "/top.php"){
+} elseif ($self == "/top.php") {
   $actTop = "actBtn";
-}elseif($self == "/dladoroslych.php"){
+} elseif ($self == "/dladoroslych.php") {
   $actKomiksy = "actBtn";
   $actDD = "actBtn";
-}elseif($self == "/dladzieci.php"){
+} elseif ($self == "/dladzieci.php") {
   $actKomiksy = "actBtn";
   $actDlaD = "actBtn";
-}elseif($self == "/superbohaterowie.php"){
+} elseif ($self == "/superbohaterowie.php") {
   $actKomiksy = "actBtn";
   $actSuper = "actBtn";
-}elseif($self == "/inne.php"){
+} elseif ($self == "/inne.php") {
   $actKomiksy = "actBtn";
   $actInne = "actBtn";
-}elseif($self == "/loginRegister.php"){
+} elseif ($self == "/loginRegister.php") {
   $actregister = "actBtn";
-}elseif($self == "/loginRegister.php"){
+} elseif ($self == "/loginRegister.php") {
   $actLogin = "actBtn";
-}elseif($self == "/addNew.php"){
+} elseif ($self == "/addNew.php") {
   $actDodaj = "actBtn";
 }
 
 
-if(isset($_SESSION['login']))
-{
+if (isset($_SESSION['login'])) {
   $userId = $_SESSION['userId'];
   $taskAdmin = "SELECT Permission From Users Where ID_users=$userId";
-  $queryAdmin = mysqli_query($connect,$taskAdmin);
+  $queryAdmin = mysqli_query($connect, $taskAdmin);
   $fetchADmin = mysqli_fetch_assoc($queryAdmin);
-  if($fetchADmin['Permission']==1){
-  $dAdmin = "";   
-  }else $dAdmin = " d-none";
-  
-  $login = '<a class="nav-link" href="users.php?">Witaj '.$_SESSION['username'].'</a>';
-  $logout ='<a class="nav-link " href="logout.php">Wyloguj Się</a>';
+  if ($fetchADmin['Permission'] == 1) {
+    $dAdmin = "";
+  }
+
+  $login = '<a class="nav-link" href="users.php?">Witaj ' . $_SESSION['username'] . '</a>';
+  $logout = '<a class="nav-link " href="logout.php">Wyloguj Się</a>';
   $d = "";
-}else{
-  $login = '<a class="nav-link  '.$actLogin.'" href="loginRegister.php">Zaloguj się</a>';
-  $logout ='<a class="nav-link '.$actregister.'" href="loginRegister.php">zarejestruj się</a>';
- $d =" d-none";
- 
+} else {
+  $login = '<a class="nav-link  ' . $actLogin . '" href="loginRegister.php">Zaloguj się</a>';
+  $logout = '<a class="nav-link ' . $actregister . '" href="loginRegister.php">zarejestruj się</a>';
+  $d = " d-none";
 }
 
-function alerts($sessionName, $color){
+function alerts($sessionName, $color)
+{
 
-  if(isset($_SESSION[$sessionName])){
+  if (isset($_SESSION[$sessionName])) {
     echo '
-    <div class="alert alert-'.$color.' alert-dismissible fade show" role="alert" style="margin-top:5px;">
-    '.$_SESSION[$sessionName].'
+    <div class="alert alert-' . $color . ' alert-dismissible fade show" role="alert" style="margin-top:5px;">
+    ' . $_SESSION[$sessionName] . '
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
     </div>';
-   
-}
-unset($_SESSION[$sessionName]);
+  }
+  unset($_SESSION[$sessionName]);
 }
 
 
-function tabs($showTab){
+function tabs($showTab)
+{
 
   $tabs = [];
-  if(isset($_SESSION[$showTab])||isset($_GET[$showTab])){
-    $tabs['cardHeaderAriaSelTab_1']=false;
-    $tabs['cardHeaderAriaSelTab_2']=true;
-    
+  if (isset($_SESSION[$showTab]) || isset($_GET[$showTab])) {
+    $tabs['cardHeaderAriaSelTab_1'] = false;
+    $tabs['cardHeaderAriaSelTab_2'] = true;
 
-    $tabs['cardHeaderClassTab_1']="";
-    $tabs['cardHeaderClassTab_2']="active";
-    
 
-    $tabs['cardBodyClassTab_1']="";
-    $tabs['cardBodyClassTab_2']="show active";
-    
+    $tabs['cardHeaderClassTab_1'] = "";
+    $tabs['cardHeaderClassTab_2'] = "active";
 
-  
 
-}else{
-    $tabs['cardHeaderAriaSelTab_1']=true;
-    $tabs['cardHeaderAriaSelTab_2']=false;
-   
+    $tabs['cardBodyClassTab_1'] = "";
+    $tabs['cardBodyClassTab_2'] = "show active";
+  } else {
+    $tabs['cardHeaderAriaSelTab_1'] = true;
+    $tabs['cardHeaderAriaSelTab_2'] = false;
 
-    $tabs['cardHeaderClassTab_1']="active";
-    $tabs['cardHeaderClassTab_2']="";
-   
 
-    $tabs['cardBodyClassTab_1']="show active";
-    $tabs['cardBodyClassTab_2']="";
-   
-}
-unset($_SESSION[$showTab]);
-unset($_GET[$showTab]);
-return $tabs;
+    $tabs['cardHeaderClassTab_1'] = "active";
+    $tabs['cardHeaderClassTab_2'] = "";
+
+
+    $tabs['cardBodyClassTab_1'] = "show active";
+    $tabs['cardBodyClassTab_2'] = "";
+  }
+  unset($_SESSION[$showTab]);
+  unset($_GET[$showTab]);
+  return $tabs;
 }
 
 
@@ -163,24 +158,24 @@ $nav = '<!doctype html>
         
         <div class="collapse navbar-collapse px-3" id="navbarNav" style="height:100%">
           <ul class="navbar-nav">
-            <li class="nav-item '.$actIndex.'" style="height:100%;">
+            <li class="nav-item ' . $actIndex . '" style="height:100%;">
               <a class="nav-link" href="index.php">Strona Główna<span class="sr-only">(current)</span></a>
             </li>
            
-              <li class="nav-item '.$actDD.'">
+              <li class="nav-item ' . $actDD . '">
               <a class="nav-link " href="forAdults.php">Dla dorosłych</a>
               </li>            
-              <li class="nav-item  '.$actDlaD. '">
+              <li class="nav-item  ' . $actDlaD . '">
               <li><a class="nav-link " href="forKids.php">Dla dzieci</a></li>
               </li>
-              <li class="nav-item '.$actSuper.'">
+              <li class="nav-item ' . $actSuper . '">
               <a class="nav-link  " href="superHeroes.php">Superbohaterowie</a>
               </li>
-              <li class="nav-item '.$actInne.'">
+              <li class="nav-item ' . $actInne . '">
               <a class="nav-link" href="other.php">Inne</a>
               </li>
             
-            <li class="nav-item dropdown '.$d.' '.$actDodaj.'">
+            <li class="nav-item dropdown ' . $d . ' ' . $actDodaj . '">
               <a class="nav-link dropdown-toggle " href="#" id="addNew" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dodaj
               </a>
@@ -189,20 +184,20 @@ $nav = '<!doctype html>
                 <a class="dropdown-item btn-drop-list" href="addAutor.php">Dodaj Autora</a>                
               </div>
             </li>
-            <li class="nav-item'.$dAdmin.'">
+            <li class="nav-item' . $dAdmin . '">
             <a class="nav-link" href="admin-autor.php">admin Autor</a>
           </li>
-            <li class ="nav-item '.$dAdmin.'">
+            <li class ="nav-item ' . $dAdmin . '">
               <a class="nav-link" href="admin-books.php">admin Komiksy<a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
           
           <li class="nav-item">
-          '.$login.'
+          ' . $login . '
         </li>
         <li class="nav-item">
-        '.$logout.'
+        ' . $logout . '
       </li>      
           </ul>
         </div>
@@ -223,10 +218,10 @@ $nav = '<!doctype html>
         </div>
        
       </nav>';
-           
-    
 
-$end ='
+
+
+$end = '
   </body>
 </html>';
 
@@ -234,10 +229,11 @@ $end ='
 
 
 
-function check_login(){
-  if (!isset($_SESSION['zalogowany'])){
+function check_login()
+{
+  if (!isset($_SESSION['zalogowany'])) {
     header('location:index.php');
-    
+
     exit();
   }
 }
@@ -245,58 +241,51 @@ function check_login(){
 
 
 //walidacja i dodawanie zdjecia
-function save_img($inputName, $fileName, $targetDir){
-  if(is_uploaded_file($_FILES[$inputName]['tmp_name'])) {
-      $target_dir=$targetDir.'/';
-      $target_file=$target_dir . basename($_FILES[$inputName]["name"]);
-      $uploadOk=1;
-      $date=date("Y-m-d-H-i-s");
-     
-      $imageFileType=strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-      $target_file=$target_dir .$fileName.'_'.$date .'.'. $imageFileType;
+function save_img($inputName, $fileName, $targetDir)
+{
+  if (is_uploaded_file($_FILES[$inputName]['tmp_name'])) {
+    $target_dir = $targetDir . '/';
+    $target_file = $target_dir . basename($_FILES[$inputName]["name"]);
+    $uploadOk = 1;
+    $date = date("Y-m-d-H-i-s");
 
-      // Allow certain file formats
-      if($imageFileType !="jpg"&& $imageFileType !="png"&& $imageFileType !="jpeg"&& $imageFileType !="gif") {
-          echo "Możesz przesłać pliki tylko w formatach .jpg, .jpeg, .png oraz .gif";
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $target_file = $target_dir . $fileName . '_' . $date . '.' . $imageFileType;
 
-          $uploadOk=0;
+    // Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+      echo "Możesz przesłać pliki tylko w formatach .jpg, .jpeg, .png oraz .gif";
+
+      $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+      echo " Twój plik nie został wysłany";
+      // if everything is ok, try to upload file
+    } else {
+      if (move_uploaded_file($_FILES[$inputName]["tmp_name"], $target_file)) {
+        $patch = $target_file;
+      } else {
+        echo "Wystąpił bład";
       }
-
-      // Check if $uploadOk is set to 0 by an error
-      if ($uploadOk==0) {
-          echo " Twój plik nie został wysłany";
-          // if everything is ok, try to upload file
-      }
-
-      else {
-          if (move_uploaded_file($_FILES[$inputName]["tmp_name"], $target_file)) {
-              $patch=$target_file;
-          }
-
-          else {
-              echo "Wystąpił bład";
-          }
-      }
-     
-  }
-
-  else {
-      $patch="brak";
+    }
+  } else {
+    $patch = "brak";
   }
   return $patch;
 }
 
 
 //wysyłanie meili
-function  sendEmail($email, $subject, $message){
-      
-      $header = "From: gigi@pim.usermd.net \nContent-Type:".
-      ' text/plain;charset="UTF-8"'.
-      "\nContent-Transfer-Encoding: 8bit";
-      $to = $email;
-      $subject = $subject;
-      $message = $message;
-      mail($to, $subject, $message, $header);
-}
+function  sendEmail($email, $subject, $message)
+{
 
-?> 
+  $header = "From: gigi@pim.usermd.net \nContent-Type:" .
+    ' text/plain;charset="UTF-8"' .
+    "\nContent-Transfer-Encoding: 8bit";
+  $to = $email;
+  $subject = $subject;
+  $message = $message;
+  mail($to, $subject, $message, $header);
+}
